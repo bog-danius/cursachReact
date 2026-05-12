@@ -1,11 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>DB API Tester</title>
+	<style>
+		body { font-family: sans-serif; max-width: 1000px; margin: 20px auto; padding: 0 20px; background: #f4f4f9; }
+		section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+		h2 { border-bottom: 2px solid #eee; padding-bottom: 10px; color: #333; }
+		.form-group { margin-bottom: 10px; }
+		input, textarea { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 4px; }
+		button { padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+		button:hover { background: #0056b3; }
+		pre { background: #272822; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto; max-height: 300px; }
+		.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+	</style>
 </head>
 <body>
-	<h1>Hello</h1>
+
+<h1>Тестирование CRUD операций</h1>
+
+<div class="grid">
+	<!-- ТАБЛИЦА ПОЛЬЗОВАТЕЛИ -->
+	<section>
+		<h2>1. Пользователи</h2>
+		<div class="form-group">
+			<input type="text" id="userName" placeholder="Имя">
+			<input type="text" id="userSurname" placeholder="Фамилия">
+			<input type="email" id="userEmail" placeholder="Email">
+			<input type="password" id="userPass" placeholder="Пароль">
+		</div>
+		<button onclick="createUser()">Создать пользователя</button>
+		<button onclick="getData('/api/users')">Список всех</button>
+	</section>
+
+	<!-- ТАБЛИЦА БИЛЕТЫ -->
+	<section>
+		<h2>2. Билеты</h2>
+		<div class="form-group">
+			<input type="text" id="ticketTitle" placeholder="Название события">
+			<input type="text" id="ticketPoster" placeholder="URL постера (например: https://picsum.photos/200)">
+			<input type="datetime-local" id="ticketDate">
+			<input type="number" id="ticketPrice" placeholder="Цена">
+			<input type="number" id="ticketStock" placeholder="Кол-во мест">
+		</div>
+		<button onclick="createTicket()">Добавить билет</button>
+		<button onclick="getData('/api/tickets')">Показать билеты</button>
+	</section>
+
+	<!-- ТАБЛИЦА АКЦИИ -->
+	<section>
+		<h2>3. Акции (к Билету)</h2>
+		<div class="form-group">
+			<input type="number" id="promoTicketId" placeholder="ID билета">
+			<input type="text" id="promoTitle" placeholder="Название акции">
+			<input type="number" id="promoDiscount" placeholder="Скидка (%)">
+			<input type="date" id="promoUntil">
+		</div>
+		<button onclick="createPromo()">Добавить акцию</button>
+	</section>
+
+	<!-- КОРЗИНА И ЗАКАЗЫ -->
+	<section>
+		<h2>4. Покупка и Корзина</h2>
+		<div class="form-group">
+			<input type="number" id="orderUserId" placeholder="ID пользователя">
+			<input type="number" id="orderAmount" placeholder="Сумма заказа">
+		</div>
+		<button onclick="createOrder()">Оформить покупку</button>
+		<button onclick="getData('/api/orders')">Все заказы</button>
+		<button onclick="getData('/api/history')">История логов</button>
+	</section>
+</div>
+
+<!-- ОКНО РЕЗУЛЬТАТА -->
+<section>
+	<h2>Результат запроса (JSON)</h2>
+	<pre id="output">// Здесь появится ответ от сервера...</pre>
+</section>
+
+<script>
+	const output = document.getElementById('output');
+
+	// Универсальная функция для отображения данных
+	async function getData(url) {
+		try {
+			const res = await fetch(url);
+			const data = await res.json();
+			output.textContent = JSON.stringify(data, null, 2);
+		} catch (err) {
+			output.textContent = "Ошибка: " + err.message;
+		}
+	}
+
+	// 1. Создание пользователя
+	async function createUser() {
+		const body = {
+			firstName: document.getElementById('userName').value,
+			lastName: document.getElementById('userSurname').value,
+			email: document.getElementById('userEmail').value,
+			password: document.getElementById('userPass').value
+		};
+		sendPost('/api/users', body);
+	}
+
+	// 2. Создание билета
+	async function createTicket() {
+		const body = {
+			title: document.getElementById('ticketTitle').value,
+			posterUrl: document.getElementById('ticketPoster').value,
+			dateTime: document.getElementById('ticketDate').value,
+			basePrice: parseFloat(document.getElementById('ticketPrice').value),
+			stock: parseInt(document.getElementById('ticketStock').value)
+		};
+		sendPost('/api/tickets', body);
+	}
+
+	// 3. Создание акции
+	async function createPromo() {
+		const body = {
+			ticketId: parseInt(document.getElementById('promoTicketId').value),
+			title: document.getElementById('promoTitle').value,
+			discount: parseFloat(document.getElementById('promoDiscount').value),
+			validUntil: document.getElementById('promoUntil').value
+		};
+		sendPost('/api/promotions', body);
+	}
+
+	// 4. Создание заказа
+	async function createOrder() {
+		const body = {
+			userId: parseInt(document.getElementById('orderUserId').value),
+			totalAmount: parseFloat(document.getElementById('orderAmount').value)
+		};
+		sendPost('/api/orders', body);
+	}
+
+	// Вспомогательная функция для POST запросов
+	async function sendPost(url, body) {
+		try {
+			const res = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(body)
+			});
+
+			const text = await res.text();
+
+			try {
+				const data = JSON.parse(text);
+
+				output.textContent = JSON.stringify(data, null, 2);
+
+			} catch {
+				output.textContent = text;
+			}
+
+		} catch (err) {
+			output.textContent = "Ошибка: " + err.message;
+		}
+	}
+</script>
 </body>
 </html>

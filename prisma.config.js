@@ -1,4 +1,3 @@
-import { defineConfig } from '@prisma/config';
 import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
 import "dotenv/config";
