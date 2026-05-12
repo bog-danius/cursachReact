@@ -1,2 +1,1 @@
-# ОТЧЕТ
-https://docs.google.com/document/d/1g-NUbmXQCeZL_a1HehOhwqxPttXA7005cf9v1zN6km0/edit?usp=sharing
+Ссылка на google docs: https://docs.google.com/document/d/11j9qC4BcrxFnAI1E6VDRPXjCNoQ29YWSOdN4idNYQt8/edit?usp=sharing
