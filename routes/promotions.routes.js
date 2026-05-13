@@ -3,55 +3,103 @@ import { prisma } from "../prisma/prisma.js";
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
-    try {
-        const promo = await prisma.promotion.create({
-            data: {
-                ticketId: Number(req.body.ticketId),
-                title: req.body.title,
-                discount: Number(req.body.discount),
-                validUntil: new Date(req.body.validUntil)
-            }
-        });
-        res.json(promo);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+const asyncHandler = (fn) => (req, res, next) => {
+    Promise.resolve(fn(req, res, next)).catch(next);
+};
 
-router.get("/", async (req, res) => {
-    const promos = await prisma.promotion.findMany();
-    res.json(promos);
-});
+router.post("/", asyncHandler(async (req, res) => {
 
-router.put("/:id", async (req, res) => {
-    try {
-        const promo = await prisma.promotion.update({
-            where: {
-                id: Number(req.params.id)
-            },
-            data: {
-                title: req.body.title,
-                discount: Number(req.body.discount)
-            }
-        });
-        res.json(promo);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+    const {
+        title,
+        description,
+        discount
+    } = req.body;
 
-router.delete("/:id", async (req, res) => {
-    try {
-        await prisma.promotion.delete({
-            where: {
-                id: Number(req.params.id)
-            }
+    if (
+        !title ||
+        !description ||
+        !discount
+    ) {
+        return res.status(400).json({
+            message: "Все поля обязательны"
         });
-        res.sendStatus(204);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
     }
-});
+
+    const promotion = await prisma.promotion.create({
+        data: {
+            title,
+            description,
+            discount: Number(discount)
+        }
+    });
+
+    res.status(201).json(promotion);
+}));
+
+router.get("/", asyncHandler(async (req, res) => {
+
+    const promotions = await prisma.promotion.findMany({
+        include: {
+            tickets: true
+        }
+    });
+
+    res.json(promotions);
+}));
+
+router.get("/:id", asyncHandler(async (req, res) => {
+
+    const promotion = await prisma.promotion.findUnique({
+        where: {
+            id: Number(req.params.id)
+        },
+        include: {
+            tickets: true
+        }
+    });
+
+    if (!promotion) {
+        return res.status(404).json({
+            message: "Акция не найдена"
+        });
+    }
+
+    res.json(promotion);
+}));
+
+router.put("/:id", asyncHandler(async (req, res) => {
+
+    const {
+        title,
+        description,
+        discount
+    } = req.body;
+
+    const promotion = await prisma.promotion.update({
+        where: {
+            id: Number(req.params.id)
+        },
+        data: {
+            title,
+            description,
+            discount: discount
+                ? Number(discount)
+                : undefined
+        }
+    });
+
+    res.json(promotion);
+}));
+
+router.delete("/:id", asyncHandler(async (req, res) => {
+
+    await prisma.promotion.delete({
+        where: {
+            id: Number(req.params.id)
+        }
+    });
+
+    res.sendStatus(204);
+}));
 
 export default router;

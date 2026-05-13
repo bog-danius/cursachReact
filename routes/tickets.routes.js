@@ -3,130 +3,220 @@ import { prisma } from "../prisma/prisma.js";
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
-    try {
-        const ticket = await prisma.ticket.create({
-            data: {
-                title: req.body.title,
-                posterUrl: req.body.posterUrl,
-                dateTime: new Date(req.body.dateTime),
-                basePrice: Number(req.body.basePrice),
-                stock: Number(req.body.stock)
-            }
-        });
-        res.json(ticket);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+const asyncHandler = (fn) => (req, res, next) => {
+    Promise.resolve(fn(req, res, next)).catch(next);
+};
 
-router.get("/", async (req, res) => {
-    try {
-        const tickets = await prisma.ticket.findMany({
-            include: {
-                promotions: true
-            }
-        });
-        res.json(tickets);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+router.post("/", asyncHandler(async (req, res) => {
 
-router.get("/search", async (req, res) => {
-    try {
-        const q = String(req.query.q || "");
-        const tickets = await prisma.ticket.findMany({
-            where: {
-                title: {
-                    contains: q
-                }
-            }
-        });
-        res.json(tickets);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+    const {
+        title,
+        description,
+        price,
+        eventDate,
+        posterUrl,
+        quantity,
+        promotionId
+    } = req.body;
 
-router.get("/page", async (req, res) => {
-    try {
-        const page = Number(req.query.page) || 1;
-        const limit = Number(req.query.limit) || 5;
-        const tickets = await prisma.ticket.findMany({
-            skip: (page - 1) * limit,
-            take: limit
+    if (
+        !title ||
+        !description ||
+        !price ||
+        !eventDate ||
+        !posterUrl ||
+        !quantity ||
+        !promotionId
+    ) {
+        return res.status(400).json({
+            message: "Все поля обязательны"
         });
-        res.json(tickets);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
     }
-});
 
-router.get("/sort/price-asc", async (req, res) => {
-    const tickets = await prisma.ticket.findMany({
-        orderBy: {
-            basePrice: "asc"
+    const ticket = await prisma.ticket.create({
+        data: {
+            title,
+            description,
+            price: Number(price),
+            eventDate: new Date(eventDate),
+            posterUrl,
+            quantity: Number(quantity),
+            promotionId: Number(promotionId)
         }
     });
-    res.json(tickets);
-});
 
-router.get("/sort/price-desc", async (req, res) => {
+    res.status(201).json(ticket);
+}));
+
+router.get("/", asyncHandler(async (req, res) => {
+
     const tickets = await prisma.ticket.findMany({
-        orderBy: {
-            basePrice: "desc"
+        include: {
+            promotion: true
         }
     });
+
     res.json(tickets);
-});
+}));
 
-router.get("/:id", async (req, res) => {
-    try {
-        const ticket = await prisma.ticket.findUnique({
-            where: {
-                id: Number(req.params.id)
-            }
-        });
-        res.json(ticket);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+router.get("/search", asyncHandler(async (req, res) => {
 
-router.put("/:id", async (req, res) => {
-    try {
-        const ticket = await prisma.ticket.update({
-            where: {
-                id: Number(req.params.id)
-            },
-            data: {
-                title: req.body.title,
-                posterUrl: req.body.posterUrl,
-                dateTime: req.body.dateTime
-                    ? new Date(req.body.dateTime)
-                    : undefined,
-                basePrice: Number(req.body.basePrice),
-                stock: Number(req.body.stock)
-            }
-        });
-        res.json(ticket);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+    const q = String(req.query.q || "");
 
-router.delete("/:id", async (req, res) => {
-    try {
-        await prisma.ticket.delete({
-            where: {
-                id: Number(req.params.id)
+    const tickets = await prisma.ticket.findMany({
+        where: {
+            title: {
+                contains: q
             }
+        }
+    });
+
+    if (tickets.length === 0) {
+        return res.json({
+            message: "Не найдено"
         });
-        res.sendStatus(204);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
     }
-});
+
+    res.json(tickets);
+}));
+
+router.get("/page", asyncHandler(async (req, res) => {
+
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 5;
+
+    const tickets = await prisma.ticket.findMany({
+        skip: (page - 1) * limit,
+        take: limit
+    });
+
+    if (tickets.length === 0) {
+        return res.json({
+            message: "Не найдено"
+        });
+    }
+
+    res.json(tickets);
+}));
+
+router.get("/sort/price-asc", asyncHandler(async (req, res) => {
+
+    const tickets = await prisma.ticket.findMany({
+        orderBy: {
+            price: "asc"
+        }
+    });
+
+    res.json(tickets);
+}));
+
+router.get("/sort/price-desc", asyncHandler(async (req, res) => {
+
+    const tickets = await prisma.ticket.findMany({
+        orderBy: {
+            price: "desc"
+        }
+    });
+
+    res.json(tickets);
+}));
+
+router.get("/sort/date-asc", asyncHandler(async (req, res) => {
+
+    const tickets = await prisma.ticket.findMany({
+        orderBy: {
+            eventDate: "asc"
+        }
+    });
+
+    res.json(tickets);
+}));
+
+router.get("/sort/date-desc", asyncHandler(async (req, res) => {
+
+    const tickets = await prisma.ticket.findMany({
+        orderBy: {
+            eventDate: "desc"
+        }
+    });
+
+    res.json(tickets);
+}));
+
+router.get("/sort/quantity-desc", asyncHandler(async (req, res) => {
+
+    const tickets = await prisma.ticket.findMany({
+        orderBy: {
+            quantity: "desc"
+        }
+    });
+
+    res.json(tickets);
+}));
+
+router.get("/:id", asyncHandler(async (req, res) => {
+
+    const ticket = await prisma.ticket.findUnique({
+        where: {
+            id: Number(req.params.id)
+        },
+        include: {
+            promotion: true
+        }
+    });
+
+    if (!ticket) {
+        return res.status(404).json({
+            message: "Билет не найден"
+        });
+    }
+
+    res.json(ticket);
+}));
+
+router.put("/:id", asyncHandler(async (req, res) => {
+
+    const {
+        title,
+        description,
+        price,
+        eventDate,
+        posterUrl,
+        quantity,
+        promotionId
+    } = req.body;
+
+    const ticket = await prisma.ticket.update({
+        where: {
+            id: Number(req.params.id)
+        },
+        data: {
+            title,
+            description,
+            price: price ? Number(price) : undefined,
+            eventDate: eventDate
+                ? new Date(eventDate)
+                : undefined,
+            posterUrl,
+            quantity: quantity ? Number(quantity) : undefined,
+            promotionId: promotionId
+                ? Number(promotionId)
+                : undefined
+        }
+    });
+
+    res.json(ticket);
+}));
+
+router.delete("/:id", asyncHandler(async (req, res) => {
+
+    await prisma.ticket.delete({
+        where: {
+            id: Number(req.params.id)
+        }
+    });
+
+    res.sendStatus(204);
+}));
 
 export default router;

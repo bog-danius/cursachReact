@@ -3,57 +3,84 @@ import { prisma } from "../prisma/prisma.js";
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
-    try {
-        const user = await prisma.user.create({
-            data: req.body
+const asyncHandler = (fn) => (req, res, next) => {
+    Promise.resolve(fn(req, res, next)).catch(next);
+};
+
+router.post("/", asyncHandler(async (req, res) => {
+
+    const { email, firstName, lastName, password } = req.body;
+
+    if (!email || !firstName || !lastName || !password) {
+        return res.status(400).json({
+            message: "Все поля обязательны"
         });
-
-        res.json(user);
-
-    } catch(err) {
-        res.status(500).json({ error: err.message });
     }
-});
 
-router.get("/:id", async (req, res) => {
-    try {
-        const users = await prisma.user.findMany();
-        res.json(users);
-    } catch(err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+    const user = await prisma.user.create({
+        data: {
+            email,
+            firstName,
+            lastName,
+            password
+        }
+    });
 
-router.put("/:id", async (req, res) => {
-    try {
-        const user = await prisma.user.update({
-            where: {
-                id: Number(req.params.id)
-            },
-            data: req.body
+    res.status(201).json(user);
+}));
+
+router.get("/", asyncHandler(async (req, res) => {
+
+    const users = await prisma.user.findMany();
+
+    res.json(users);
+}));
+
+router.get("/:id", asyncHandler(async (req, res) => {
+
+    const id = Number(req.params.id);
+
+    const user = await prisma.user.findUnique({
+        where: { id }
+    });
+
+    if (!user) {
+        return res.status(404).json({
+            message: "Пользователь не найден"
         });
-
-        res.json(user);
-
-    } catch(err) {
-        res.status(500).json({ error: err.message });
     }
-});
 
-router.delete("/:id", async (req, res) => {
-    try {
-        await prisma.user.delete({
-            where: {
-                id: Number(req.params.id)
-            }
-        });
+    res.json(user);
+}));
 
-        res.sendStatus(204);
+router.put("/:id", asyncHandler(async (req, res) => {
 
-    } catch(err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+    const id = Number(req.params.id);
+
+    const { email, firstName, lastName, password } = req.body;
+
+    const user = await prisma.user.update({
+        where: { id },
+        data: {
+            email,
+            firstName,
+            lastName,
+            password
+        }
+    });
+
+    res.json(user);
+}));
+
+router.delete("/:id", asyncHandler(async (req, res) => {
+
+    const id = Number(req.params.id);
+
+    await prisma.user.delete({
+        where: { id }
+    });
+
+    res.sendStatus(204);
+}));
 
 export default router;
