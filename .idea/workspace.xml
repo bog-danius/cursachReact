@@ -4,48 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42fa8f51-ca54-40d2-81b6-6c1a53f3f6a4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/prisma/seed.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/matches.routes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/tournaments.routes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/main/components/FeaturesSection/FeaturesSection.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/main/components/FeaturesSection/FeaturesSection.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/main/components/FeaturesSection/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/main/components/TournamentSection/TournamentSection.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/main/components/TournamentSection/TournamentSection.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/main/components/TournamentSection/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/main/widgets/Main.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/tournaments/api/api.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/tournaments/components/TournamentsSection/TournamentSection.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/tournaments/components/TournamentsSection/TournamentSection.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/tournaments/components/TournamentsSection/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/tournaments/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/tournaments/widgets/TournamentsPage.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/tournaments/widgets/TournamentsPage.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/Button/Button.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/Button/Button.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/Header/Header.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/Header/Header.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/Header/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/SectionTitle/SectionTitle.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/SectionTitle/SectionTitle.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/SectionTitle/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="42fa8f51-ca54-40d2-81b6-6c1a53f3f6a4" name="Changes" comment="feat: &quot;add main pages&quot;">
+      <change afterPath="$PROJECT_DIR$/src/pages/auth/api/api.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/auth/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/auth/widgets/AuthPage.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/auth/widgets/AuthPage.module.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/prisma.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/cart.routes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/documents.routes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/favorite.routes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/orders.routes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/promotions.routes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/reviews.routes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/tickets.routes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/users.routes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/tournaments/widgets/TournamentsPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/tournaments/widgets/TournamentsPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/tournaments/widgets/TournamentsPage.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/tournaments/widgets/TournamentsPage.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/Header/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/Header/Header.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,8 +26,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
         <option value="JSX File" />
+        <option value="CSS File" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -133,11 +101,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1779039929841</updated>
-      <workItem from="1779039932294" duration="6355000" />
+      <workItem from="1779039932294" duration="9079000" />
     </task>
+    <task id="LOCAL-00001" summary="feat: &quot;add main pages&quot;">
+      <option name="closed" value="true" />
+      <created>1779046404118</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1779046404119</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: &quot;add main pages&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: &quot;add main pages&quot;" />
   </component>
 </project>

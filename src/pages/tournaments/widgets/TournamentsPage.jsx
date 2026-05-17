@@ -1,315 +1,545 @@
-import { useEffect, useState } from "react";
-import { Header } from "@shared/Header";
-import { Footer } from "@shared/Footer";
+import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+import { Header } from '@shared/Header';
+import { Footer } from '@shared/Footer';
 import styles from "./TournamentsPage.module.css";
+
 import {
     getAllTournaments,
-    createTournament,
-    deleteTournament,
     getGames,
-    createGame,
     registerForTournament,
     getMyRegistrations,
 } from "../api/api.js";
 
-// Заглушка — замени на реального авторизованного пользователя
-const CURRENT_USER_ID = 1;
+// ─────────────────────────────────────────────
+// Заглушка пользователя
+// потом заменишь на auth/jwt
+// ─────────────────────────────────────────────
+
+const CURRENT_USER = {
+    id: 1,
+    role: "user", // user | admin
+};
 
 export const TournamentsPage = () => {
-    const [tournaments, setTournaments]     = useState([]);
-    const [games, setGames]                 = useState([]);
-    const [myRegs, setMyRegs]               = useState([]);
-    const [loading, setLoading]             = useState(true);
-    const [showForm, setShowForm]           = useState(false);
-    const [submitting, setSubmitting]       = useState(false);
-    const [tab, setTab]                     = useState("all"); // "all" | "my"
-    const [form, setForm] = useState({
-        title: "",
-        promotionId: "",
-        quantity: 8,
-        eventDate: "",
-        description: "",   // счёт, например "2:1"
-        posterUrl: "",
+    const [tournaments, setTournaments] = useState([]);
+    const [games, setGames] = useState([]);
+    const [myRegs, setMyRegs] = useState([]);
+
+    const [loading, setLoading] = useState(true);
+
+    const [tab, setTab] = useState("all");
+    // all | my | favorites
+
+    const [favorites, setFavorites] = useState(() => {
+        const saved = localStorage.getItem("favorite-tournaments");
+
+        return saved ? JSON.parse(saved) : [];
     });
+    const [selectedTournament, setSelectedTournament] = useState(null);
+    // ─────────────────────────────────────────────
+    // Load
+    // ─────────────────────────────────────────────
 
     const load = async () => {
         setLoading(true);
+
         try {
-            const [t, g, r] = await Promise.all([
-                getAllTournaments(),
-                getGames(),
-                getMyRegistrations(CURRENT_USER_ID),
-            ]);
-            setTournaments(Array.isArray(t) ? t : []);
-            setGames(Array.isArray(g) ? g : []);
-            // r может быть {message: "Заказы не найдены"} — обрабатываем
-            setMyRegs(Array.isArray(r) ? r : []);
-        } catch (e) {
-            console.error(e);
+            const [tournamentsData, gamesData, registrationsData] =
+                await Promise.all([
+                    getAllTournaments(),
+                    getGames(),
+                    getMyRegistrations(CURRENT_USER.id),
+                ]);
+
+            setTournaments(
+                Array.isArray(tournamentsData)
+                    ? tournamentsData
+                    : []
+            );
+
+            setGames(
+                Array.isArray(gamesData)
+                    ? gamesData
+                    : []
+            );
+
+            setMyRegs(
+                Array.isArray(registrationsData)
+                    ? registrationsData
+                    : []
+            );
+
+        } catch (error) {
+            console.error(error);
         } finally {
             setLoading(false);
         }
     };
 
-    useEffect(() => { load(); }, []);
+    useEffect(() => {
+        load();
+    }, []);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setForm((prev) => ({ ...prev, [name]: value }));
+    // ─────────────────────────────────────────────
+    // Favorites
+    // ─────────────────────────────────────────────
+
+    useEffect(() => {
+        localStorage.setItem(
+            "favorite-tournaments",
+            JSON.stringify(favorites)
+        );
+    }, [favorites]);
+
+    const toggleFavorite = (id) => {
+        setFavorites((prev) =>
+            prev.includes(id)
+                ? prev.filter((x) => x !== id)
+                : [...prev, id]
+        );
     };
 
-    const handleSubmit = async () => {
-        if (!form.title.trim())       return alert("Введите название");
-        if (!form.promotionId)        return alert("Выберите игру");
-        if (!form.eventDate)          return alert("Укажите дату");
-
-        setSubmitting(true);
-        try {
-            await createTournament({
-                ...form,
-                quantity: Number(form.quantity) || 8,
-                promotionId: Number(form.promotionId),
-            });
-            setShowForm(false);
-            setForm({ title: "", promotionId: "", quantity: 8, eventDate: "", description: "", posterUrl: "" });
-            load();
-        } catch (e) {
-            alert(e.message);
-        } finally {
-            setSubmitting(false);
-        }
-    };
+    // ─────────────────────────────────────────────
+    // Register
+    // ─────────────────────────────────────────────
 
     const handleRegister = async (tournamentId) => {
         try {
-            await registerForTournament({ ticketId: tournamentId, userId: CURRENT_USER_ID });
-            alert("Вы зарегистрированы!");
+            await registerForTournament({
+                ticketId: tournamentId,
+                userId: CURRENT_USER.id,
+            });
+
+            alert("Вы успешно зарегистрировались!");
+
             load();
         } catch (e) {
             alert(e.message);
         }
     };
 
-    const handleDelete = async (id) => {
-        if (!confirm("Удалить турнир?")) return;
-        try {
-            await deleteTournament(id);
-            setTournaments((prev) => prev.filter((t) => t.id !== id));
-        } catch (e) {
-            alert(e.message);
+    // ─────────────────────────────────────────────
+    // Мои турниры
+    // ─────────────────────────────────────────────
+
+    const myTournamentIds = useMemo(() => {
+        return new Set(myRegs.map((r) => r.ticketId));
+    }, [myRegs]);
+
+    // ─────────────────────────────────────────────
+    // Filter
+    // ─────────────────────────────────────────────
+
+    const displayed = useMemo(() => {
+
+        if (tab === "my") {
+            return tournaments.filter((t) =>
+                myTournamentIds.has(t.id)
+            );
         }
-    };
 
-    // id турниров на которые я зарегистрирован
-    const myTournamentIds = new Set(myRegs.map((r) => r.ticketId));
+        if (tab === "favorites") {
+            return tournaments.filter((t) =>
+                favorites.includes(t.id)
+            );
+        }
 
-    const displayed = tab === "my"
-        ? tournaments.filter((t) => myTournamentIds.has(t.id))
-        : tournaments;
+        return tournaments;
+
+    }, [tab, tournaments, favorites, myTournamentIds]);
+
+    // ─────────────────────────────────────────────
+    // Render
+    // ─────────────────────────────────────────────
 
     return (
         <>
             <Header />
             <main className={styles.page}>
 
-                {/* ── Заголовок ─────────────────────────────────── */}
+                {/* ───────────────── HEADER ───────────────── */}
+
                 <div className={styles.pageHeader}>
+
                     <div>
-                        <span className={styles.subtitle}>Соревнования</span>
-                        <h1 className={styles.title}>Турниры</h1>
+                    <span className={styles.subtitle}>
+                        Esports Platform
+                    </span>
+
+                        <h1 className={styles.title}>
+                            Турниры
+                        </h1>
+
+                        <p className={styles.description}>
+                            Следите за киберспортивными матчами,
+                            участвуйте в турнирах и сохраняйте
+                            любимые события.
+                        </p>
                     </div>
-                    <button
-                        className={styles.createBtn}
-                        onClick={() => setShowForm((v) => !v)}
-                    >
-                        {showForm ? "✕ Отмена" : "+ Создать турнир"}
-                    </button>
+
                 </div>
 
-                {/* ── Форма создания ────────────────────────────── */}
-                {showForm && (
-                    <div className={styles.formCard}>
-                        <h2 className={styles.formTitle}>Новый турнир</h2>
-                        <div className={styles.formGrid}>
+                {/* ───────────────── TABS ───────────────── */}
 
-                            <div className={styles.field}>
-                                <label>Название *</label>
-                                <input
-                                    name="title"
-                                    value={form.title}
-                                    onChange={handleChange}
-                                    placeholder="Valorant Championship"
-                                    className={styles.input}
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label>Игра *</label>
-                                <select
-                                    name="promotionId"
-                                    value={form.promotionId}
-                                    onChange={handleChange}
-                                    className={styles.input}
-                                >
-                                    <option value="">— Выбери игру —</option>
-                                    {games.map((g) => (
-                                        <option key={g.id} value={g.id}>{g.title}</option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            <div className={styles.field}>
-                                <label>Макс. команд</label>
-                                <input
-                                    name="quantity"
-                                    type="number"
-                                    min={2}
-                                    max={64}
-                                    value={form.quantity}
-                                    onChange={handleChange}
-                                    className={styles.input}
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label>Дата турнира *</label>
-                                <input
-                                    name="eventDate"
-                                    type="datetime-local"
-                                    value={form.eventDate}
-                                    onChange={handleChange}
-                                    className={styles.input}
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label>Счёт (например: 2:1)</label>
-                                <input
-                                    name="description"
-                                    value={form.description}
-                                    onChange={handleChange}
-                                    placeholder="2:1"
-                                    className={styles.input}
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label>Ссылка на постер</label>
-                                <input
-                                    name="posterUrl"
-                                    value={form.posterUrl}
-                                    onChange={handleChange}
-                                    placeholder="https://..."
-                                    className={styles.input}
-                                />
-                            </div>
-
-                        </div>
-
-                        <button
-                            className={styles.submitBtn}
-                            onClick={handleSubmit}
-                            disabled={submitting}
-                        >
-                            {submitting ? "Создаём..." : "Создать турнир"}
-                        </button>
-                    </div>
-                )}
-
-                {/* ── Табы ──────────────────────────────────────── */}
                 <div className={styles.tabs}>
+
                     <button
-                        className={`${styles.tab} ${tab === "all" ? styles.tabActive : ""}`}
+                        className={`${styles.tab} ${
+                            tab === "all"
+                                ? styles.tabActive
+                                : ""
+                        }`}
                         onClick={() => setTab("all")}
                     >
                         Все турниры
                     </button>
+
                     <button
-                        className={`${styles.tab} ${tab === "my" ? styles.tabActive : ""}`}
+                        className={`${styles.tab} ${
+                            tab === "my"
+                                ? styles.tabActive
+                                : ""
+                        }`}
                         onClick={() => setTab("my")}
                     >
                         Мои турниры
                     </button>
+
+                    <button
+                        className={`${styles.tab} ${
+                            tab === "favorites"
+                                ? styles.tabActive
+                                : ""
+                        }`}
+                        onClick={() => setTab("favorites")}
+                    >
+                        Избранное
+                    </button>
+
                 </div>
 
-                {/* ── Список ────────────────────────────────────── */}
-                {loading && <p className={styles.state}>Загрузка...</p>}
+                {/* ───────────────── STATES ───────────────── */}
 
-                {!loading && displayed.length === 0 && (
+                {loading && (
                     <p className={styles.state}>
-                        {tab === "my" ? "Вы не зарегистрированы ни в одном турнире" : "Турниров пока нет"}
+                        Загрузка турниров...
                     </p>
                 )}
 
-                <div className={styles.grid}>
-                    {displayed.map((t) => {
-                        const isRegistered = myTournamentIds.has(t.id);
-                        return (
-                            <div key={t.id} className={styles.card}>
+                {!loading && displayed.length === 0 && (
+                    <p className={styles.state}>
+                        {tab === "my" &&
+                            "Вы пока не участвуете ни в одном турнире"}
 
-                                {t.posterUrl && (
+                        {tab === "favorites" &&
+                            "У вас нет избранных турниров"}
+
+                        {tab === "all" &&
+                            "Турниров пока нет"}
+                    </p>
+                )}
+
+                {/* ───────────────── GRID ───────────────── */}
+
+                <div className={styles.grid}>
+
+                    {displayed.map((tournament) => {
+
+                        const isRegistered =
+                            myTournamentIds.has(tournament.id);
+
+                        const isFavorite =
+                            favorites.includes(tournament.id);
+
+                        return (
+
+                            <div
+                                key={tournament.id}
+                                className={styles.card}
+                            >
+
+                                {/* ───────────────── IMAGE ───────────────── */}
+
+                                <div className={styles.posterWrapper}>
+
                                     <img
-                                        src={t.posterUrl}
-                                        alt={t.title}
+                                        src={
+                                            tournament.posterUrl ||
+                                            "https://images.unsplash.com/photo-1542751371-adc38448a05e"
+                                        }
+                                        alt={tournament.title}
                                         className={styles.poster}
                                     />
-                                )}
+
+                                    <button
+                                        className={`${styles.favoriteBtn} ${
+                                            isFavorite
+                                                ? styles.favoriteActive
+                                                : ""
+                                        }`}
+                                        onClick={() =>
+                                            toggleFavorite(
+                                                tournament.id
+                                            )
+                                        }
+                                    >
+                                        {isFavorite ? "★" : "☆"}
+                                    </button>
+
+                                </div>
+
+                                {/* ───────────────── BODY ───────────────── */}
 
                                 <div className={styles.cardBody}>
+
                                     <div className={styles.cardTop}>
-                                        <span className={styles.game}>
-                                            {t.promotion?.title ?? "Турнир"}
-                                        </span>
+
+                                    <span className={styles.game}>
+                                        {tournament.promotion?.title ??
+                                            "Tournament"}
+                                    </span>
+
                                         <span className={styles.cardDate}>
-                                            {new Date(t.eventDate).toLocaleDateString("ru-RU")}
-                                        </span>
+                                        {new Date(
+                                            tournament.eventDate
+                                        ).toLocaleDateString(
+                                            "ru-RU"
+                                        )}
+                                    </span>
+
                                     </div>
 
-                                    <h3 className={styles.cardTitle}>{t.title}</h3>
+                                    {/* ───────────────── TITLE ───────────────── */}
 
-                                    {/* Счёт из description */}
-                                    {t.description ? (
+                                    <h3 className={styles.cardTitle}>
+                                        {tournament.title}
+                                    </h3>
+
+                                    {/* ───────────────── SCORE ───────────────── */}
+
+                                    {tournament.description ? (
                                         <div className={styles.scoreBlock}>
-                                            <span className={styles.scoreLabel}>Счёт</span>
-                                            <span className={styles.scoreValue}>{t.description}</span>
+
+                                        <span className={styles.scoreLabel}>
+                                            Счёт
+                                        </span>
+
+                                            <span className={styles.scoreValue}>
+                                            {tournament.description}
+                                        </span>
+
                                         </div>
                                     ) : (
-                                        <p className={styles.noScore}>Матч ещё не начался</p>
+                                        <div className={styles.noScore}>
+                                            Матч ещё не начался
+                                        </div>
                                     )}
 
+                                    {/* ───────────────── META ───────────────── */}
+
                                     <div className={styles.meta}>
-                                        <span>👥 Макс. команд: {t.quantity}</span>
-                                        <span>🎮 {t.orders?.length ?? 0} участников</span>
+
+                                    <span>
+                                        👥 Макс. команд:
+                                        {" "}
+                                        {tournament.quantity}
+                                    </span>
+
+                                        <span>
+                                        🎮 Участников:
+                                            {" "}
+                                            {tournament.orders?.length ?? 0}
+                                    </span>
+
                                     </div>
 
+                                    {/* ───────────────── ACTIONS ───────────────── */}
+
                                     <div className={styles.cardActions}>
+
                                         {!isRegistered ? (
+
                                             <button
                                                 className={styles.registerBtn}
-                                                onClick={() => handleRegister(t.id)}
+                                                onClick={() =>
+                                                    handleRegister(
+                                                        tournament.id
+                                                    )
+                                                }
                                             >
                                                 Участвовать
                                             </button>
+
                                         ) : (
-                                            <span className={styles.registered}>✓ Вы участвуете</span>
+
+                                            <div className={styles.registered}>
+                                                ✓ Вы участвуете
+                                            </div>
+
                                         )}
 
                                         <button
-                                            className={styles.deleteBtn}
-                                            onClick={() => handleDelete(t.id)}
+                                            className={styles.detailsBtn}
+                                            onClick={() => setSelectedTournament(tournament)}
                                         >
-                                            Удалить
+                                            Подробнее
                                         </button>
+
                                     </div>
+
                                 </div>
 
                             </div>
+
                         );
                     })}
-                </div>
 
+                </div>
+                {selectedTournament && (
+
+                    <div
+                        className={styles.modalOverlay}
+                        onClick={() => setSelectedTournament(null)}
+                    >
+
+                        <div
+                            className={styles.modal}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+
+                            <img
+                                src={
+                                    selectedTournament.posterUrl ||
+                                    "https://images.unsplash.com/photo-1542751371-adc38448a05e"
+                                }
+                                alt={selectedTournament.title}
+                                className={styles.modalPoster}
+                            />
+
+                            <div className={styles.modalContent}>
+
+                                <div className={styles.modalTop}>
+
+                    <span className={styles.modalGame}>
+                        {selectedTournament.promotion?.title || "Tournament"}
+                    </span>
+
+                                    <button
+                                        className={styles.closeBtn}
+                                        onClick={() => setSelectedTournament(null)}
+                                    >
+                                        ✕
+                                    </button>
+
+                                </div>
+
+                                <h2 className={styles.modalTitle}>
+                                    {selectedTournament.title}
+                                </h2>
+
+                                <p className={styles.modalDescription}>
+                                    {selectedTournament.description
+                                        ? `Текущий счёт матча: ${selectedTournament.description}`
+                                        : "Матч ещё не начался. Следите за обновлениями турнира и результатами команд."}
+                                </p>
+
+                                {/* ───────────────── META ───────────────── */}
+
+                                <div className={styles.modalMeta}>
+
+                                    <div className={styles.metaItem}>
+                                        🎮 Игра:
+                                        {" "}
+                                        {selectedTournament.promotion?.title || "Unknown"}
+                                    </div>
+
+                                    <div className={styles.metaItem}>
+                                        👥 Макс. команд:
+                                        {" "}
+                                        {selectedTournament.quantity}
+                                    </div>
+
+                                    <div className={styles.metaItem}>
+                                        🧑‍🤝‍🧑 Участников:
+                                        {" "}
+                                        {selectedTournament.orders?.length ?? 0}
+                                    </div>
+
+                                    <div className={styles.metaItem}>
+                                        📅 Дата:
+                                        {" "}
+                                        {new Date(
+                                            selectedTournament.eventDate
+                                        ).toLocaleDateString("ru-RU")}
+                                    </div>
+
+                                </div>
+
+                                {/* ───────────────── SCORE ───────────────── */}
+
+                                {selectedTournament.description && (
+
+                                    <div className={styles.scoreBlock}>
+
+                        <span className={styles.scoreLabel}>
+                            LIVE SCORE
+                        </span>
+
+                                        <span className={styles.scoreValue}>
+                            {selectedTournament.description}
+                        </span>
+
+                                    </div>
+
+                                )}
+
+                                {/* ───────────────── ACTIONS ───────────────── */}
+
+                                <div className={styles.modalActions}>
+
+                                    {!myTournamentIds.has(selectedTournament.id) ? (
+
+                                        <button
+                                            className={styles.registerBtn}
+                                            onClick={() =>
+                                                handleRegister(selectedTournament.id)
+                                            }
+                                        >
+                                            Участвовать в турнире
+                                        </button>
+
+                                    ) : (
+
+                                        <div className={styles.registered}>
+                                            ✓ Вы участвуете в турнире
+                                        </div>
+
+                                    )}
+
+                                    <button
+                                        className={styles.detailsBtn}
+                                        onClick={() => {
+                                            toggleFavorite(selectedTournament.id);
+                                        }}
+                                    >
+                                        {favorites.includes(selectedTournament.id)
+                                            ? "★ В избранном"
+                                            : "☆ Добавить в избранное"}
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                )}
             </main>
             <Footer />
         </>
+
     );
 };

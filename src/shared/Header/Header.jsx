@@ -1,5 +1,6 @@
 import styles from './Header.module.css';
 import { Button } from '@shared/Button';
+import { TournamentsPage } from '@pages/tournaments';
 
 export const Header = () => {
     return (
@@ -11,8 +12,8 @@ export const Header = () => {
 
                 <nav className={styles.nav}>
                     <a href="#features">Функции</a>
-                    <a href="#tournaments">Турниры</a>
-                    <a href="#analytics">Аналитика</a>
+                    <a href="./TournamentsPage">Турниры</a>
+                    <a href="./AuthPage">Аналитика</a>
                     <a href="#contacts">Контакты</a>
                 </nav>
 
