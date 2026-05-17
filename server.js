@@ -13,6 +13,8 @@ import favoriteRoutes from "./routes/favorite.routes.js";
 import ordersRoutes from "./routes/orders.routes.js";
 import reviewsRoutes from "./routes/reviews.routes.js";
 import documentsRoutes from "./routes/documents.routes.js";
+import tournamentsRoutes from "./routes/tournaments.routes.js";
+import matchesRoutes from "./routes/matches.routes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -40,14 +42,16 @@ app.use("/api/favorite", favoriteRoutes);
 app.use("/api/orders", ordersRoutes);
 app.use("/api/reviews", reviewsRoutes);
 app.use("/api/documents", documentsRoutes);
+app.use("/api/tournaments", tournamentsRoutes);
+app.use("/api/matches", matchesRoutes);
 
 app.use((err, req, res, next) => {
-    res.status(500).json({
-        message: "Сервер ушёл(",
-        error: err.message 
-    });
+	res.status(500).json({
+		message: "Сервер ушёл(",
+		error: err.message
+	});
 });
 
 app.listen(process.env.PORT, process.env.HOST, () => {
-	console.log(` Server running: http://${process.env.HOST}:${process.env.PORT}`);
+	console.log(`Server running: http://${process.env.HOST}:${process.env.PORT}`);
 });
