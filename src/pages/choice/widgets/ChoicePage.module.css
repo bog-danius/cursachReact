@@ -1,0 +1,453 @@
+/* ГЛОБАЛЬНЫЙ КОНТЕЙНЕР — ТЕМНЫЙ ТЕХНОЛОГИЧНЫЙ ХАБ */
+.wrapper {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #030712;
+  background-image:
+          linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+  background-size: 40px 40px;
+  color: #f3f4f6;
+  font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+/* ОБНОВЛЕННЫЙ ХЕДЕР-ПАНЕЛЬ */
+.dashHeader {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: #0b0f19;
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  padding: 20px 32px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  margin-bottom: 40px;
+}
+
+.backCircleBtn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #9ca3af;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.backCircleBtn:hover {
+  border-color: #38bdf8;
+  color: #38bdf8;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+}
+
+.dashTitleBlock {
+  flex-grow: 1;
+}
+
+.subTitle {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #6b7280;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.mainTitle {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0;
+  color: #fff;
+}
+
+/* НЕОНОВЫЕ ПЕРЕКЛЮЧАТЕЛИ ТАБОВ */
+.neonTabs {
+  display: flex;
+  background: #111827;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.neonTab {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 24px;
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.neonTabActive {
+  background: #1e293b;
+  color: #38bdf8;
+  box-shadow: inset 0 0 0 1px rgba(56, 189, 248, 0.3);
+}
+
+.tabCounter {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+/* ДЕШБОРД СЕТКА */
+.cartDashboardGrid {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 40px;
+  align-items: start;
+}
+
+.cyberGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+/* ТРЁХМЕРНАЯ КАРТОЧКА СЛОТА / БИЛЕТА */
+.cyberCard {
+  background: linear-gradient(145deg, #0f172a 0%, #070a13 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 220px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cyberCard:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.05);
+}
+
+.cardCloseCorner {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  color: #4b5563;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.cardCloseCorner:hover {
+  color: #ef4444;
+}
+
+.cyberCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.cyberBadgeContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #38bdf8;
+}
+
+.cyberDiscountLabel {
+  background: #ef4444;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.cyberCardDate {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #6b7280;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.cyberCardBody h3 {
+  font-size: 16px;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+  font-weight: 600;
+  color: #f3f4f6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.pricePerItem {
+  font-size: 14px;
+  color: #9ca3af;
+  margin-bottom: 20px;
+}
+
+.perItemText {
+  font-size: 11px;
+  color: #4b5563;
+}
+
+/* НИЖНЯЯ ПАНЕЛЬ С КНОПКАМИ КАРТОЧКИ */
+.cyberCardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 16px;
+}
+
+.cyberCounter {
+  display: flex;
+  align-items: center;
+  background: #1e293b;
+  border-radius: 8px;
+  padding: 2px;
+}
+
+.cntBtn {
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.cntBtn:hover:not(:disabled) {
+  background: rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+}
+
+.cntBtn:disabled {
+  opacity: 0.2;
+}
+
+.cntValue {
+  padding: 0 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.itemSummaryPrice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.oldPriceSum {
+  font-size: 11px;
+  text-decoration: line-through;
+  color: #4b5563;
+}
+
+.newPriceSum {
+  font-size: 18px;
+  font-weight: 800;
+  color: #38bdf8;
+}
+
+/* ФУТУРИСТИЧЕСКИЙ ОВЕРЛЕЙ ОПЛАТЫ */
+.cyberSummaryPanel {
+  background: #0b0f19;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 32px;
+  position: sticky;
+  top: 40px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+
+.panelHead {
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+  color: #fff;
+}
+
+.panelRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.discountText {
+  color: #ef4444;
+}
+
+.panelDivider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.05);
+  margin: 20px 0;
+}
+
+.panelTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.panelTotal span {
+  font-size: 16px;
+  color: #fff;
+}
+
+.glowTotal {
+  font-size: 28px;
+  font-weight: 900;
+  color: #10b981;
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+}
+
+.cyberCheckoutBtn {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(90deg, #059669 0%, #10b981 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cyberCheckoutBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+}
+
+/* ФУТЕР КАРТОЧКИ ДЛЯ ИЗБРАННОГО */
+.favCardFooter {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 16px;
+}
+
+.cyberBtnAction {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cyberBtnAction:hover {
+  background: #38bdf8;
+  color: #000;
+}
+
+.favoriteActiveIcon {
+  color: #ef4444;
+}
+
+/* ПУСТЫЕ СОСТОЯНИЯ */
+.emptyCyberBlock {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 80px 40px;
+  background: #0b0f19;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+}
+
+.cyberIcon {
+  color: #374151;
+  margin-bottom: 24px;
+}
+
+.cyberBtnPrimary {
+  display: inline-block;
+  padding: 12px 32px;
+  background: #38bdf8;
+  color: #000;
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 8px;
+  margin-top: 16px;
+}
+
+/* ТОСТЫ УВЕДОМЛЕНИЙ */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 24px;
+  border-radius: 12px;
+  background: #111827;
+  border-left: 4px solid #10b981;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  z-index: 1000;
+}
+.success { border-left-color: #10b981; }
+.error { border-left-color: #ef4444; }
+
+.toastClose {
+  background: transparent;
+  border: none;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+/* АДАПТИВНОСТЬ */
+@media (max-width: 1200px) {
+  .cartDashboardGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper { padding: 16px; }
+  .dashHeader {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 20px;
+  }
+  .neonTabs { width: 100%; }
+  .neonTab { flex-grow: 1; justify-content: center; }
+}

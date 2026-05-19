@@ -1,0 +1,136 @@
+/* СПЕЦИФИЧЕСКИЕ СТИЛИ ДЛЯ ШАБЛОНА CHECKOUT */
+.checkoutMetaHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.checkoutStatusBadge {
+  background: rgba(212, 175, 55, 0.08);
+  color: #d4af37;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.itemsCounter {
+  font-size: 13px;
+  color: #475569;
+}
+
+.itemsListGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* КАРТОЧКА БИЛЕТА В СПИСКЕ ОФОРМЛЕНИЯ */
+.checkoutTicketCard {
+  background: #080a10;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 20px;
+  transition: border-color 0.2s;
+}
+
+.checkoutTicketCard:hover {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.ticketCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.ticketIconContainer {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid #1e293b;
+  color: #64748b;
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ticketCheckoutTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+/* ДЕТАЛИЗАЦИЯ ВНУТРИ КАРТОЧКИ */
+.ticketDetailsMetaGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.metaDetailCell {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+
+.metaCellIcon {
+  color: #475569;
+  margin-top: 2px;
+}
+
+.metaCellText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metaCellLabel {
+  font-size: 11px;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.metaCellValue {
+  font-size: 13px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.discountBadgeInline {
+  margin-top: 14px;
+  display: inline-block;
+  font-size: 12px;
+  color: #2ecc71;
+  background: rgba(46, 204, 113, 0.06);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(46, 204, 113, 0.1);
+}
+
+/* АДАПТИВНОЕ УПРАВЛЕНИЕ ВИДИМОСТЬЮ ИТОГОВ */
+.mobileBillingSummary {
+  display: none; /* Полностью прячем на десктопе, так как данные дублируются в правом сайдбаре */
+}
+
+@media (max-width: 1024px) {
+  .mobileBillingSummary {
+    display: block; /* Показываем на планшетах и телефонах, когда панели встают в ряд друг под другом */
+    margin-top: 24px;
+  }
+  .ticketDetailsMetaGrid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}

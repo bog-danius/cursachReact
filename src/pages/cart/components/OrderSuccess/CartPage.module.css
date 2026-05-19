@@ -1,0 +1,134 @@
+/* СПЕЦИФИЧНЫЕ СТИЛИ ДЛЯ КОМПОНЕНТА SUCCESS */
+.successBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.successIconWrapper {
+  position: relative;
+  margin-bottom: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.successIcon {
+  color: #2ecc71;
+  position: relative;
+  z-index: 2;
+}
+
+.successGlowRing {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background: rgba(46, 204, 113, 0.1);
+  border-radius: 50%;
+  filter: blur(10px);
+  z-index: 1;
+}
+
+.orderToken {
+  color: #d4af37;
+  font-family: monospace;
+  font-size: 17px;
+  background: #161c32;
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.successText {
+  color: #94a3b8;
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 480px;
+  margin: 0 0 32px 0;
+}
+
+/* КНОПКИ ЗАГРУЗКИ ДОКУМЕНТОВ */
+.downloadActions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 440px;
+  margin-bottom: 28px;
+}
+
+.downloadButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #080a10;
+  border: 1px solid #1e293b;
+  color: #f1f5f9;
+  padding: 14px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.downloadButton:hover {
+  background: #121829;
+  border-color: #d4af37;
+  transform: translateX(2px);
+}
+
+.downloadBtnLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.docIconDocx {
+  color: #2563eb; /* Синий акцент для Word */
+}
+
+.docIconPdf {
+  color: #ef4444; /* Красный акцент для PDF */
+}
+
+.downloadArrow {
+  color: #475569;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.downloadButton:hover .downloadArrow {
+  color: #d4af37;
+  transform: translateY(1px);
+}
+
+.successDivider {
+  width: 100%;
+  max-width: 440px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #1e293b, transparent);
+  margin-bottom: 24px;
+}
+
+/* КНОПКА ВОЗВРАТА НА ГЛАВНУЮ */
+.homeButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid #1e293b;
+  color: #64748b;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.homeButton:hover {
+  color: #fff;
+  border-color: #475569;
+  background: rgba(255, 255, 255, 0.02);
+}

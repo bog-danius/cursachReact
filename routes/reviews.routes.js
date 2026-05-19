@@ -8,19 +8,20 @@ const asyncHandler = (fn) => (req, res, next) => {
 };
 
 router.post("/", asyncHandler(async (req, res) => {
+    const { content, orderId } = req.body;
 
-    const {
-        content,
-        orderId
-    } = req.body;
+    if (!content || !orderId) {
+        return res.status(400).json({ message: "Все поля обязательны" });
+    }
 
-    if (
-        !content ||
-        !orderId
-    ) {
-        return res.status(400).json({
-            message: "Все поля обязательны"
-        });
+    const existingReview = await prisma.review.findFirst({
+        where: {
+            orderId: Number(orderId)
+        }
+    });
+
+    if (existingReview) {
+        return res.status(400).json({ message: "Вы уже оставили отзыв к этому заказу" });
     }
 
     const review = await prisma.review.create({
@@ -75,6 +76,24 @@ router.get("/ticket/:idTicket", asyncHandler(async (req, res) => {
     }
 
     res.json(reviews);
+}));
+
+router.delete("/:id", asyncHandler(async (req, res) => {
+    const { id } = req.params;
+
+    const review = await prisma.review.findUnique({
+        where: { id: Number(id) }
+    });
+
+    if (!review) {
+        return res.status(404).json({ message: "Отзыв не найден" });
+    }
+
+    await prisma.review.delete({
+        where: { id: Number(id) }
+    });
+
+    res.json({ message: "Отзыв успешно удален" });
 }));
 
 export default router;

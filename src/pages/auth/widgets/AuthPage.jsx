@@ -1,256 +1,214 @@
-import { useState } from "react";
-import styles from "./AuthPage.module.css";
-import {
-    loginUser,
-    registerUser,
-} from "../api/api";
+import { useState, useEffect } from 'react';
+import styles from './AuthPage.module.css';
+import { authApi } from '../api/auth';
 
 export const AuthPage = () => {
+  const [isLogin, setIsLogin] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-    const [mode, setMode] = useState("login");
-    // login | register
+  const [form, setForm] = useState({
+    email: '',
+    firstName: '',
+    lastName: '',
+    password: '',
+    repeatPassword: '',
+  });
 
-    const [form, setForm] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    setForm({
+      email: '',
+      firstName: '',
+      lastName: '',
+      password: '',
+      repeatPassword: '',
     });
+    setErrors({});
+  }, [isLogin]);
 
-    const [loading, setLoading] = useState(false);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+    
+    if (errors[name] || errors.main) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next[name];
+        delete next.main;
+        return next;
+      });
+    }
+  };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
+  const validate = () => {
+    const newErrors = {};
 
-        setForm((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
+    const emailTrimmed = form.email.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (!emailTrimmed) {
+      newErrors.email = 'Email обязателен для заполнения';
+    } else if (!emailRegex.test(emailTrimmed)) {
+      newErrors.email = 'Некорректный формат email';
+    }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    if (!form.password) {
+      newErrors.password = 'Пароль обязателен для заполнения';
+    } else if (form.password.length < 6) {
+      newErrors.password = 'Минимум 6 символов';
+    }
 
-        setLoading(true);
+    if (!isLogin) {
+      const firstNameTrimmed = form.firstName.trim();
+      const lastNameTrimmed = form.lastName.trim();
 
-        try {
+      if (!firstNameTrimmed) {
+        newErrors.firstName = 'Имя обязательно для заполнения';
+      } else if (firstNameTrimmed.length < 2) {
+        newErrors.firstName = 'Имя слишком короткое';
+      }
 
-            // LOGIN
+      if (!lastNameTrimmed) {
+        newErrors.lastName = 'Фамилия обязательна для заполнения';
+      } else if (lastNameTrimmed.length < 2) {
+        newErrors.lastName = 'Фамилия слишком короткая';
+      }
 
-            if (mode === "login") {
+      if (form.password !== form.repeatPassword) {
+        newErrors.repeatPassword = 'Пароли не совпадают';
+      }
+    }
 
-                const user = await loginUser({
-                    email: form.email,
-                    password: form.password,
-                });
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return false;
+    }
 
-                console.log(user);
+    setErrors({});
+    return true;
+  };
 
-                alert("Вы успешно вошли!");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
 
-                window.location.href = "/";
+    try {
+      setLoading(true);
 
-            }
+      if (isLogin) {
+        await authApi.login({ 
+          email: form.email.trim(), 
+          password: form.password 
+        });
+      } else {
+        await authApi.register({
+          email: form.email.trim(),
+          firstName: form.firstName.trim(),
+          lastName: form.lastName.trim(),
+          password: form.password,
+        });
+      }
 
-            // REGISTER
-
-            else {
-
-                await registerUser({
-                    firstName: form.firstName,
-                    lastName: form.lastName,
-                    email: form.email,
-                    password: form.password,
-                });
-
-                alert("Аккаунт создан!");
-
-                setMode("login");
-            }
-
-        } catch (error) {
-
-            alert(error.message);
-
-        } finally {
-
-            setLoading(false);
-
+      window.location.href = '/';
+    } catch (error) {
+      const serverMessage = error?.response?.data?.message || error?.response?.data?.error;
+      const serverFieldsErrors = error?.response?.data?.errors;
+      
+      if (serverFieldsErrors) {
+        setErrors(serverFieldsErrors);
+      } else if (serverMessage) {
+        if (serverMessage.toLowerCase().includes('email')) {
+          setErrors({ email: serverMessage });
+        } else {
+          setErrors({ main: serverMessage });
         }
-    };
+      } else if (error?.response?.status === 401) {
+        setErrors({ main: 'Неверная почта или пароль' });
+      } else {
+        setErrors({ main: 'Ошибка соединения с сервером' });
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    return (
+  return (
+    <div className={styles.wrapper}>
+      <form className={styles.form} onSubmit={handleSubmit} noValidate>
+        <h2 className={styles.title}>{isLogin ? 'Вход' : 'Регистрация'}</h2>
 
-        <main className={styles.page}>
+        <div className={styles.inputField}>
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+          />
+          {errors.email && <span className={styles.errorText}>{errors.email}</span>}
+        </div>
 
-            {/* BACKGROUND */}
-
-            <div className={styles.blur1}></div>
-            <div className={styles.blur2}></div>
-
-            {/* CARD */}
-
-            <div className={styles.card}>
-
-                {/* HEADER */}
-
-                <div className={styles.header}>
-
-                    <span className={styles.badge}>
-                        Esports Platform
-                    </span>
-
-                    <h1 className={styles.title}>
-                        {mode === "login"
-                            ? "Добро пожаловать"
-                            : "Создать аккаунт"}
-                    </h1>
-
-                    <p className={styles.description}>
-                        {mode === "login"
-                            ? "Войдите в аккаунт для участия в турнирах"
-                            : "Зарегистрируйтесь для участия в киберспортивных турнирах"}
-                    </p>
-
-                </div>
-
-                {/* TABS */}
-
-                <div className={styles.tabs}>
-
-                    <button
-                        className={`${styles.tab} ${
-                            mode === "login"
-                                ? styles.tabActive
-                                : ""
-                        }`}
-                        onClick={() => setMode("login")}
-                    >
-                        Вход
-                    </button>
-
-                    <button
-                        className={`${styles.tab} ${
-                            mode === "register"
-                                ? styles.tabActive
-                                : ""
-                        }`}
-                        onClick={() => setMode("register")}
-                    >
-                        Регистрация
-                    </button>
-
-                </div>
-
-                {/* FORM */}
-
-                <form
-                    className={styles.form}
-                    onSubmit={handleSubmit}
-                >
-
-                    {mode === "register" && (
-
-                        <div className={styles.row}>
-
-                            <div className={styles.field}>
-
-                                <label>
-                                    Имя
-                                </label>
-
-                                <input
-                                    type="text"
-                                    name="firstName"
-                                    placeholder="Bogdan"
-                                    value={form.firstName}
-                                    onChange={handleChange}
-                                    className={styles.input}
-                                    required
-                                />
-
-                            </div>
-
-                            <div className={styles.field}>
-
-                                <label>
-                                    Фамилия
-                                </label>
-
-                                <input
-                                    type="text"
-                                    name="lastName"
-                                    placeholder="Player"
-                                    value={form.lastName}
-                                    onChange={handleChange}
-                                    className={styles.input}
-                                    required
-                                />
-
-                            </div>
-
-                        </div>
-
-                    )}
-
-                    {/* EMAIL */}
-
-                    <div className={styles.field}>
-
-                        <label>
-                            Email
-                        </label>
-
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder="example@gmail.com"
-                            value={form.email}
-                            onChange={handleChange}
-                            className={styles.input}
-                            required
-                        />
-
-                    </div>
-
-                    {/* PASSWORD */}
-
-                    <div className={styles.field}>
-
-                        <label>
-                            Пароль
-                        </label>
-
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="••••••••"
-                            value={form.password}
-                            onChange={handleChange}
-                            className={styles.input}
-                            required
-                        />
-
-                    </div>
-
-                    {/* BUTTON */}
-
-                    <button
-                        type="submit"
-                        className={styles.submitBtn}
-                        disabled={loading}
-                    >
-                        {loading
-                            ? "Загрузка..."
-                            : mode === "login"
-                                ? "Войти"
-                                : "Создать аккаунт"}
-                    </button>
-
-                </form>
-
+        {!isLogin && (
+          <>
+            <div className={styles.inputField}>
+              <input
+                name="firstName"
+                placeholder="Имя"
+                value={form.firstName}
+                onChange={handleChange}
+              />
+              {errors.firstName && <span className={styles.errorText}>{errors.firstName}</span>}
             </div>
 
-        </main>
-    );
+            <div className={styles.inputField}>
+              <input
+                name="lastName"
+                placeholder="Фамилия"
+                value={form.lastName}
+                onChange={handleChange}
+              />
+              {errors.lastName && <span className={styles.errorText}>{errors.lastName}</span>}
+            </div>
+          </>
+        )}
+
+        <div className={styles.inputField}>
+          <input
+            type="password"
+            name="password"
+            placeholder="Пароль"
+            value={form.password}
+            onChange={handleChange}
+          />
+          {errors.password && <span className={styles.errorText}>{errors.password}</span>}
+        </div>
+
+        {!isLogin && form.password.length > 0 && (
+          <div className={styles.inputField}>
+            <input
+              type="password"
+              name="repeatPassword"
+              placeholder="Повторите пароль"
+              value={form.repeatPassword}
+              onChange={handleChange}
+            />
+            {errors.repeatPassword && (
+              <span className={styles.errorText}>{errors.repeatPassword}</span>
+            )}
+          </div>
+        )}
+
+        {errors.main && <div className={styles.errorText} style={{ textAlign: 'center' }}>{errors.main}</div>}
+
+        <button type="submit" disabled={loading}>
+          {loading ? 'Загрузка...' : isLogin ? 'Войти' : 'Зарегистрироваться'}
+        </button>
+
+        <p className={styles.switch} onClick={() => setIsLogin(!isLogin)}>
+          {isLogin ? 'Нет аккаунта? Регистрация' : 'Уже есть аккаунт? Войти'}
+        </p>
+      </form>
+    </div>
+  );
 };

@@ -1,5 +1,7 @@
 const BASE_URL = "/api";
 
+
+
 // ─── Турниры (Ticket) ────────────────────────────────────────────────────────
 // title       = название турнира
 // description = счёт матча, например "2:1"
@@ -102,25 +104,61 @@ export const deleteMatch = async (matchId) => {
 // userId     = id пользователя
 // quantity   = 1
 // totalPrice = 0
+export const registerForTournament = async (
+    tournamentId
+) => {
 
-export const registerForTournament = async ({ ticketId, userId }) => {
-    const res = await fetch(`${BASE_URL}/orders`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            ticketId: Number(ticketId),
-            userId: Number(userId),
-            quantity: 1,
-            totalPrice: 0,
-        }),
-    });
-    if (!res.ok) throw new Error("Ошибка регистрации");
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(
+        `${BASE_URL}/orders`,
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+
+            body: JSON.stringify({
+                ticketId: tournamentId,
+                quantity: 1,
+                totalPrice: 0,
+            }),
+        }
+    );
+
+    if (!res.ok) {
+
+        const err = await res.json();
+
+        throw new Error(
+            err.message || "Ошибка регистрации"
+        );
+    }
+
     return res.json();
 };
 
-export const getMyRegistrations = async (userId) => {
-    const res = await fetch(`${BASE_URL}/orders/${userId}`);
-    if (!res.ok) throw new Error("Ошибка загрузки регистраций");
+export const getMyRegistrations = async () => {
+
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(
+        `${BASE_URL}/orders/my`,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
+
+    if (!res.ok) {
+        throw new Error(
+            "Ошибка загрузки регистраций"
+        );
+    }
+
     return res.json();
 };
 

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Header } from '@shared/Header';
 import { Footer } from '@shared/Footer';
 import styles from "./TournamentsPage.module.css";
+import { getCurrentUser } from "../../auth/api/api.js";
 
 import {
     getAllTournaments,
@@ -16,12 +17,8 @@ import {
 // потом заменишь на auth/jwt
 // ─────────────────────────────────────────────
 
-const CURRENT_USER = {
-    id: 1,
-    role: "user", // user | admin
-};
-
 export const TournamentsPage = () => {
+    const currentUser = getCurrentUser();
     const [tournaments, setTournaments] = useState([]);
     const [games, setGames] = useState([]);
     const [myRegs, setMyRegs] = useState([]);
@@ -42,41 +39,39 @@ export const TournamentsPage = () => {
     // ─────────────────────────────────────────────
 
     const load = async () => {
-        setLoading(true);
 
         try {
-            const [tournamentsData, gamesData, registrationsData] =
-                await Promise.all([
-                    getAllTournaments(),
-                    getGames(),
-                    getMyRegistrations(CURRENT_USER.id),
-                ]);
 
-            setTournaments(
-                Array.isArray(tournamentsData)
-                    ? tournamentsData
-                    : []
-            );
+            setLoading(true);
 
-            setGames(
-                Array.isArray(gamesData)
-                    ? gamesData
-                    : []
-            );
+            const [
+                tournamentsData,
+                gamesData,
+                registrationsData
+            ] = await Promise.all([
+                getAllTournaments(),
+                getGames(),
+                getMyRegistrations(),
+            ]);
 
-            setMyRegs(
-                Array.isArray(registrationsData)
-                    ? registrationsData
-                    : []
-            );
+            setTournaments(tournamentsData);
+            setGames(gamesData);
+            setMyRegs(registrationsData);
 
         } catch (error) {
-            console.error(error);
-        } finally {
-            setLoading(false);
-        }
-    };
 
+            console.error(
+                "Ошибка загрузки",
+                error
+            );
+
+        } finally {
+
+            setLoading(false);
+
+        }
+
+    };
     useEffect(() => {
         load();
     }, []);
@@ -106,10 +101,9 @@ export const TournamentsPage = () => {
 
     const handleRegister = async (tournamentId) => {
         try {
-            await registerForTournament({
-                ticketId: tournamentId,
-                userId: CURRENT_USER.id,
-            });
+            await registerForTournament(
+                tournamentId
+            );
 
             alert("Вы успешно зарегистрировались!");
 

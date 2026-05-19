@@ -1,36 +1,59 @@
-const BASE_URL = "/api";
+const BASE_URL = "http://localhost:4200/api";
 
 // ─────────────────────────────────────────────
-// REGISTER
+// TOKEN
 // ─────────────────────────────────────────────
 
-export const registerUser = async ({
-                                       firstName,
-                                       lastName,
-                                       email,
-                                       password,
-                                   }) => {
+export const getToken = () => {
+    return localStorage.getItem("token");
+};
 
-    const res = await fetch(`${BASE_URL}/users/register`, {
-        method: "POST",
+export const getCurrentUser = () => {
+    const user = localStorage.getItem("user");
 
-        headers: {
-            "Content-Type": "application/json",
-        },
+    return user
+        ? JSON.parse(user)
+        : null;
+};
 
-        body: JSON.stringify({
-            firstName,
-            lastName,
-            email,
-            password,
-        }),
-    });
+export const logoutUser = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+};
+
+// ─────────────────────────────────────────────
+// REQUEST
+// ─────────────────────────────────────────────
+
+const request = async (
+    url,
+    options = {}
+) => {
+
+    const token = getToken();
+
+    const headers = {
+        "Content-Type": "application/json",
+        ...(options.headers || {}),
+    };
+
+    if (token) {
+        headers.Authorization = `Bearer ${token}`;
+    }
+
+    const res = await fetch(
+        `${BASE_URL}${url}`,
+        {
+            ...options,
+            headers,
+        }
+    );
 
     const data = await res.json();
 
     if (!res.ok) {
         throw new Error(
-            data.message || "Ошибка регистрации"
+            data.message || "Ошибка сервера"
         );
     }
 
@@ -38,62 +61,106 @@ export const registerUser = async ({
 };
 
 // ─────────────────────────────────────────────
-// LOGIN
+// AUTH
 // ─────────────────────────────────────────────
 
-export const loginUser = async ({
-                                    email,
-                                    password,
-                                }) => {
+export const registerUser = async (userData) => {
 
-    const res = await fetch(`${BASE_URL}/users/login`, {
-        method: "POST",
+    const data = await request(
+        "/users/register",
+        {
+            method: "POST",
+            body: JSON.stringify(userData),
+        }
+    );
 
-        headers: {
-            "Content-Type": "application/json",
-        },
+    localStorage.setItem(
+        "token",
+        data.token
+    );
 
-        body: JSON.stringify({
-            email,
-            password,
-        }),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-        throw new Error(
-            data.message || "Ошибка входа"
-        );
-    }
-
-    // сохраняем пользователя
     localStorage.setItem(
         "user",
-        JSON.stringify(data)
+        JSON.stringify(data.user)
+    );
+
+    return data;
+};
+
+export const loginUser = async (userData) => {
+
+    const data = await request(
+        "/users/login",
+        {
+            method: "POST",
+            body: JSON.stringify(userData),
+        }
+    );
+
+    localStorage.setItem(
+        "token",
+        data.token
+    );
+
+    localStorage.setItem(
+        "user",
+        JSON.stringify(data.user)
     );
 
     return data;
 };
 
 // ─────────────────────────────────────────────
-// LOGOUT
+// TOURNAMENTS
 // ─────────────────────────────────────────────
 
-export const logoutUser = () => {
+export const getAllTournaments = () => {
+    return request("/tickets");
+};
 
-    localStorage.removeItem("user");
+export const getTournamentById = (id) => {
+    return request(`/tickets/${id}`);
+};
 
+export const createTournament = (body) => {
+    return request("/tickets", {
+        method: "POST",
+        body: JSON.stringify(body),
+    });
+};
+
+export const deleteTournament = (id) => {
+    return request(`/tickets/${id}`, {
+        method: "DELETE",
+    });
 };
 
 // ─────────────────────────────────────────────
-// GET CURRENT USER
+// GAMES
 // ─────────────────────────────────────────────
 
-export const getCurrentUser = () => {
+export const getGames = () => {
+    return request("/promotions");
+};
 
-    const user = localStorage.getItem("user");
+// ─────────────────────────────────────────────
+// ORDERS / REGISTRATIONS
+// ─────────────────────────────────────────────
 
-    return user ? JSON.parse(user) : null;
+export const registerForTournament = (
+    tournamentId
+) => {
 
+    return request("/orders", {
+        method: "POST",
+        body: JSON.stringify({
+            ticketId: tournamentId,
+            quantity: 1,
+            totalPrice: 0,
+        }),
+    });
+};
+
+export const getMyRegistrations = () => {
+    return request("/orders/my");
 };

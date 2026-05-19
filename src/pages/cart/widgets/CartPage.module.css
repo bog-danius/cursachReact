@@ -1,0 +1,310 @@
+/* ОБЩИЙ ФОН И СЕТКА СТРАНИЦЫ */
+.wrapper {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #090a0f;
+  background-image: radial-gradient(at 100% 0%, rgba(212, 175, 55, 0.02) 0px, transparent 50%);
+  color: #e2e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
+  padding: 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ВЕРХНИЙ ИНФОРМАЦИОННЫЙ ХЭДЕР */
+.pageHeader {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.backButtonInline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  width: max-content;
+  transition: color 0.2s;
+  padding: 0;
+}
+
+.backButtonInline:hover {
+  color: #d4af37;
+}
+
+.headerTitleBlock {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mainTitle {
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.accentIcon {
+  color: #d4af37;
+}
+
+/* ДВУХПАНЕЛЬНЫЙ СПЛИТ-ЛЕЙАУТ */
+.splitLayout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 32px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.successLayoutSingle {
+  grid-template-columns: 1fr;
+  max-width: 650px;
+}
+
+/* ЛЕВАЯ ОСНОВНАЯ ПАНЕЛЬ */
+.leftMainPanel {
+  background: #0f1322;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+/* ПРАВАЯ НЕПОДВИЖНАЯ ПАНЕЛЬ БИЛЛИНГА */
+.rightStickyPanel {
+  position: sticky;
+  top: 40px;
+}
+
+.billingCard {
+  background: #0f1322;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  padding: 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.billingHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.billingHeader h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.billingIcon {
+  color: #d4af37;
+}
+
+.billingDetailsRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+.billingDetailsValue {
+  color: #f1f5f9;
+  font-weight: 500;
+}
+
+.divider {
+  height: 1px;
+  background: #1e293b;
+  margin: 18px 0;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  color: #94a3b8;
+  margin-bottom: 20px;
+}
+
+.totalValue {
+  font-size: 26px;
+  color: #2ecc71;
+  font-weight: 700;
+  text-shadow: 0 0 15px rgba(46, 204, 113, 0.15);
+}
+
+/* КНОПКА ОПЛАТЫ */
+.payButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #d4af37;
+  color: #000;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.payButton:hover:not(:disabled) {
+  background: #e5bf42;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
+}
+
+.payButton:disabled {
+  background: #1e293b;
+  color: #475569;
+  cursor: not-allowed;
+}
+
+.secureNotice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #475569;
+  margin-top: 14px;
+  text-align: center;
+}
+
+/* ОШИБКИ И СТАТУСЫ */
+.inlineError {
+  background: rgba(239, 68, 68, 0.06);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.error {
+  color: #f87171;
+  font-size: 15px;
+  background: #0f1322;
+  padding: 20px 32px;
+  border-radius: 12px;
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  text-align: center;
+}
+
+.homeButton {
+  background: transparent;
+  border: 1px solid #1e293b;
+  color: #94a3b8;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.homeButton:hover {
+  color: #fff;
+  border-color: #d4af37;
+}
+
+/* ЭКРАН ЗАГРУЗКИ */
+.center {
+  min-height: 100vh;
+  background: #090a0f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loaderWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+  color: #d4af37;
+  width: 36px;
+  height: 36px;
+}
+
+.spinSmall {
+  animation: spin 1s linear infinite;
+}
+
+.loaderText {
+  font-size: 14px;
+  color: #64748b;
+  letter-spacing: 0.5px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* УСПЕШНЫЙ ЗАКАЗ */
+.successFullContainer {
+  background: #0f1322;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 20px;
+  padding: 40px;
+  box-sizing: border-box;
+  text-align: center;
+  width: 100%;
+}
+
+/* АДАПТИВНЫЙ ДИЗАЙН */
+@media (max-width: 1024px) {
+  .splitLayout {
+    grid-template-columns: 1fr;
+  }
+  .rightStickyPanel {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 20px;
+  }
+  .leftMainPanel {
+    padding: 20px;
+  }
+  .successFullContainer {
+    padding: 24px;
+  }
+}

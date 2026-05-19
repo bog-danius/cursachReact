@@ -4,33 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42fa8f51-ca54-40d2-81b6-6c1a53f3f6a4" name="Changes" comment="feat: &quot;add main pages&quot;">
-      <change afterPath="$PROJECT_DIR$/src/pages/auth/api/api.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/auth/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/auth/widgets/AuthPage.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/auth/widgets/AuthPage.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/tournaments/widgets/TournamentsPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/tournaments/widgets/TournamentsPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/tournaments/widgets/TournamentsPage.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/tournaments/widgets/TournamentsPage.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/Header/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/Header/Header.jsx" afterDir="false" />
-    </list>
+    <list default="true" id="9c4fcd22-dd2b-420a-83d0-86ad934f36e6" name="Changes" comment="Feat: &quot; all pages and logics&quot;" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="66" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="JSX File" />
-        <option value="CSS File" />
-        <option value="JavaScript File" />
-      </list>
-    </option>
+    <option name="cachedIndexableFilesCount" value="104" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -43,7 +24,7 @@
 }]]></component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
-    "url": "https://github.com/bog-danius/cursachReact.git",
+    "url": "https://github.com/Gonmoon/CourseREACT.git",
     "accountId": "e893e5f5-2ebd-456e-a0e9-ffe70ffe7bc3"
   }
 }]]></component>
@@ -52,10 +33,9 @@
     <urls />
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 2
+  "associatedIndex": 3
 }]]></component>
-  <component name="ProjectId" id="3DrUxUBjYuLyuPHgxOe7U348TOd" />
+  <component name="ProjectId" id="3DwtPDl4CrlGOAWGrxFXRmeYrwh" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -70,21 +50,19 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "git-widget-placeholder": "main",
     "javascript.preferred.runtime.type.id": "node",
-    "list.type.of.created.stylesheet": "CSS",
+    "last_opened_file_path": "C:/Users/New/Desktop/CourseREACT",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "ml.llm.AcpAgentsConfigurable",
+    "ts.external.directory.path": "J:\\jetbrains\\WebStorm 2025.3.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\New\Desktop\cursachReact\src\pages\tournaments\widgets" />
-      <recent name="C:\Users\New\Desktop\cursachReact\src\pages\tournaments\components\TournamentsSection" />
+      <recent name="C:\Users\New\Desktop\CourseREACT" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -96,20 +74,20 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="42fa8f51-ca54-40d2-81b6-6c1a53f3f6a4" name="Changes" comment="" />
-      <created>1779039929841</created>
+      <changelist id="9c4fcd22-dd2b-420a-83d0-86ad934f36e6" name="Changes" comment="" />
+      <created>1779204933752</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1779039929841</updated>
-      <workItem from="1779039932294" duration="9079000" />
+      <updated>1779204933752</updated>
+      <workItem from="1779204935972" duration="12007000" />
     </task>
-    <task id="LOCAL-00001" summary="feat: &quot;add main pages&quot;">
+    <task id="LOCAL-00001" summary="Feat: &quot; all pages and logics&quot;">
       <option name="closed" value="true" />
-      <created>1779046404118</created>
+      <created>1779217025707</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1779046404119</updated>
+      <updated>1779217025707</updated>
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
@@ -118,7 +96,7 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: &quot;add main pages&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: &quot;add main pages&quot;" />
+    <MESSAGE value="Feat: &quot; all pages and logics&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat: &quot; all pages and logics&quot;" />
   </component>
 </project>

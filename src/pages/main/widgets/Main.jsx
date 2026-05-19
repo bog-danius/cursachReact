@@ -1,24 +1,14 @@
-import styles from './Main.module.css';
-
-import { Header } from '@shared/Header';
-import { Footer } from '@shared/Footer';
-
-import { HeroSection } from '../components/HeroSection';
-import { FeaturesSection } from '../components/FeaturesSection';
-import { TournamentSection } from '../components/TournamentSection';
+import React from 'react';
+import { HeroSection } from '../components/HeroSection'
+import { PopularShows } from '../components/PopularShows'
+import { Advantages } from '../components/Advantages'
 
 export const Main = () => {
 	return (
-		<div className={styles.page}>
-			<Header />
-
-			<main>
-				<HeroSection />
-				<FeaturesSection />
-				<TournamentSection />
-			</main>
-
-			<Footer />
-		</div>
-	);
-};
+		<>
+			<HeroSection />
+			<PopularShows />
+			<Advantages />
+		</>
+	)
+}

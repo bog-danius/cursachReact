@@ -1,0 +1,547 @@
+*{padding: 0;margin: 0;border: 0;}
+*,*:before,*:after{-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box;}
+:focus,:active{outline: none;}
+a:focus,a:active{outline: none;}
+nav,footer,header,aside{display: block;}
+html,body{height:100%;width:100%;font-size:100%;line-height:1;font-size:14px;-ms-text-size-adjust:100%;-moz-text-size-adjust:100%;-webkit-text-size-adjust:100%;}
+input,button,textarea{font-family:inherit;}
+input::-ms-clear{display: none;}
+button{cursor: pointer;}
+button::-moz-focus-inner{padding:0;border:0;}
+a,a:visited{text-decoration: none;}
+a:hover{text-decoration: none;}
+ul li{list-style: none;}
+img{vertical-align: top;}
+h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
+
+/* FULLSCREEN БУРГЕР-МЕНЮ — ЖЕСТКИЙ РЕДИЗАЙН */
+.burgerButton {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1001;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+}
+
+.burgerButton:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.8);
+}
+
+.burgerButton:active {
+  transform: scale(0.95);
+}
+
+.burgerIcon {
+  position: relative;
+  width: 24px;
+  height: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.burgerIcon span {
+  display: block;
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.burgerIcon span:nth-child(1) { width: 24px; }
+.burgerIcon span:nth-child(2) { width: 18px; }
+.burgerIcon span:nth-child(3) { width: 12px; }
+
+.burgerButton:hover .burgerIcon span:nth-child(2) { width: 24px; }
+.burgerButton:hover .burgerIcon span:nth-child(3) { width: 18px; }
+
+/* Оверлей — больше не нужен, меню на всю страницу */
+.overlay {
+  display: none;
+}
+
+/* ГЛАВНОЕ МЕНЮ — НА ВСЮ СТРАНИЦУ */
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100vh;
+  background: #0a0c15;
+  transform: translateX(100%);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1000;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu.open {
+  transform: translateX(0);
+}
+
+/* Динамический фон с градиентами */
+.menu::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.15), transparent 50%),
+  radial-gradient(circle at 80% 70%, rgba(6, 182, 212, 0.1), transparent 55%),
+  repeating-linear-gradient(45deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 2px, transparent 2px, transparent 8px);
+  pointer-events: none;
+}
+
+.menu::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(125deg, rgba(59, 130, 246, 0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Скрываем скроллбар но оставляем функционал */
+.menu::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+/* Внутренний контейнер */
+.menuContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Кнопка закрытия — стильная */
+.closeBtn {
+  position: absolute;
+  top: 32px;
+  right: 40px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-size: 24px;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+}
+
+.closeBtn:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #f87171;
+  transform: rotate(90deg);
+}
+
+/* Логотип */
+.logo {
+  position: absolute;
+  top: 32px;
+  left: 40px;
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(125deg, #ffffff, #38bdf8, #3b82f6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  letter-spacing: -0.5px;
+  z-index: 10;
+}
+
+/* Навигация — крупная, смелая */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 60px;
+  margin-left: 50px;
+}
+p{
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 800;
+  margin-left: 50px;
+
+}
+
+.link {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: clamp(42px, 8vw, 88px);
+  font-weight: 800;
+  letter-spacing: -2px;
+  transition: all 0.25s ease;
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.menu.open .link {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger эффект для ссылок */
+.menu.open .link:nth-child(1) { transition-delay: 0.05s; }
+.menu.open .link:nth-child(2) { transition-delay: 0.1s; }
+.menu.open .link:nth-child(3) { transition-delay: 0.15s; }
+.menu.open .link:nth-child(4) { transition-delay: 0.2s; }
+.menu.open .link:nth-child(5) { transition-delay: 0.25s; }
+.menu.open .link:nth-child(6) { transition-delay: 0.3s; }
+
+.link:hover {
+  color: #38bdf8;
+  transform: translateX(20px);
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+}
+
+/* Активная ссылка с неоновым подчеркиванием */
+.link.active {
+  color: #38bdf8;
+  position: relative;
+}
+
+.link.active::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(90deg, #38bdf8, transparent);
+  border-radius: 3px;
+}
+
+/* Пользовательская секция */
+.userSection {
+  margin-top: auto;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.userBox {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-decoration: none;
+  padding: 12px 24px 12px 12px;
+  border-radius: 60px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.3s ease;
+}
+
+.userBox:hover {
+  transform: translateY(-3px);
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #3b82f6, #06b6d4);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 20px;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  margin-left: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+}
+
+.userEmail {
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+/* Кнопки входа/выхода */
+.authButtons {
+  display: flex;
+  gap: 16px;
+}
+
+.login {
+  padding: 14px 32px;
+  border-radius: 40px;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  margin: 50px
+}
+
+.login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+}
+
+.logout {
+  margin-left: 50px;
+  margin-bottom: 15px;
+  padding: 14px 32px;
+  border-radius: 40px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.logout:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Нижний колонтитул меню */
+.menuFooter {
+  margin-top: 50px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.socialLinks {
+  display: flex;
+  gap: 20px;
+}
+
+.socialLink {
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.socialLink:hover {
+  color: #38bdf8;
+}
+
+.copyright {
+  color: #4b5563;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+/* Адаптивность */
+@media (max-width: 992px) {
+  .menuContainer {
+    padding: 80px 50px;
+  }
+
+  .link {
+    font-size: 52px;
+  }
+
+  .logo {
+    font-size: 24px;
+    top: 28px;
+    left: 28px;
+  }
+
+  .closeBtn {
+    top: 24px;
+    right: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .burgerButton {
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .menuContainer {
+    padding: 100px 30px 50px;
+    justify-content: flex-start;
+  }
+
+  .logo {
+    font-size: 22px;
+    top: 24px;
+    left: 24px;
+  }
+
+  .closeBtn {
+    top: 22px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .link {
+    font-size: 38px;
+    letter-spacing: -1px;
+  }
+
+  .nav {
+    gap: 16px;
+    margin-bottom: 50px;
+  }
+
+  .userSection {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+  }
+
+  .userBox {
+    justify-content: center;
+  }
+
+  .authButtons {
+    justify-content: center;
+  }
+
+  .menuFooter {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .socialLinks {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .burgerButton {
+    top: 16px;
+    right: 16px;
+    width: 46px;
+    height: 46px;
+  }
+
+  .burgerIcon {
+    width: 20px;
+    height: 16px;
+  }
+
+  .menuContainer {
+    padding: 90px 24px 40px;
+  }
+
+  .logo {
+    font-size: 20px;
+    top: 20px;
+    left: 20px;
+  }
+
+  .closeBtn {
+    top: 18px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .link {
+    font-size: 28px;
+    letter-spacing: -0.5px;
+  }
+
+  .link:hover {
+    transform: translateX(10px);
+  }
+
+  .avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+  }
+
+  .userName {
+    font-size: 16px;
+  }
+
+  .userEmail {
+    font-size: 12px;
+  }
+
+  .login, .logout {
+    padding: 12px 28px;
+    font-size: 14px;
+  }
+
+  .socialLink {
+    font-size: 12px;
+  }
+
+  .copyright {
+    font-size: 11px;
+  }
+}
+
+.bottom{
+  position: absolute;
+  bottom: 15px;
+}
