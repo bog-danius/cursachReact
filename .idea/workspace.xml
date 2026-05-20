@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9c4fcd22-dd2b-420a-83d0-86ad934f36e6" name="Changes" comment="Feat: &quot; all pages and logics&quot;">
-      <change afterPath="$PROJECT_DIR$/src/pages/owner/OwnerPage.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/owner/api/api.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/owner/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/owner/widgets/OwnerPage.jsx" afterDir="false" />
+    <list default="true" id="9c4fcd22-dd2b-420a-83d0-86ad934f36e6" name="Changes" comment="Fix: &quot; admin page&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/seedUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/seedUser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/owner/OwnerPage.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/owner/OwnerPage.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/owner/widgets/OwnerPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/owner/widgets/OwnerPage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +97,9 @@
       <workItem from="1779204935972" duration="12007000" />
       <workItem from="1779217215139" duration="1216000" />
       <workItem from="1779218456956" duration="36000" />
-      <workItem from="1779290376422" duration="1697000" />
+      <workItem from="1779290376422" duration="2122000" />
+      <workItem from="1779292571875" duration="8000" />
+      <workItem from="1779293100415" duration="192000" />
     </task>
     <task id="LOCAL-00001" summary="Feat: &quot; all pages and logics&quot;">
       <option name="closed" value="true" />
@@ -119,7 +117,15 @@
       <option name="project" value="LOCAL" />
       <updated>1779217268725</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Fix: &quot; admin page&quot;">
+      <option name="closed" value="true" />
+      <created>1779292154227</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1779292154227</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -127,6 +133,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Feat: &quot; all pages and logics&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feat: &quot; all pages and logics&quot;" />
+    <MESSAGE value="Fix: &quot; admin page&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: &quot; admin page&quot;" />
   </component>
 </project>
