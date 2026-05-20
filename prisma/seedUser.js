@@ -40,7 +40,7 @@ async function main() {
             // ADMIN
 
             {
-                email: "admin@tourney.com",
+                email: "admin@admin.com",
                 firstName: "Александр",
                 lastName: "Смирнов",
                 password,
