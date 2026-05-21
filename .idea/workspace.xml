@@ -6,9 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="9c4fcd22-dd2b-420a-83d0-86ad934f36e6" name="Changes" comment="Fix: &quot; admin page&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/owner/OwnerPage.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/owner/OwnerPage.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/hero.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/react.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/vite.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/detail/components/ShowActions/ShowActions.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/detail/components/ShowActions/ShowActions.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/detail/components/ShowReviews/ShowReviews.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/detail/components/ShowReviews/ShowReviews.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/detail/widgets/ShowDetailPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/detail/widgets/ShowDetailPage.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/owner/widgets/OwnerPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/owner/widgets/OwnerPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/tickets/components/Tickets/Tickets.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/tickets/components/Tickets/Tickets.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/tickets/components/TicketsManager/TicketsManager.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/tickets/components/TicketsManager/TicketsManager.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/BurgerMenu/BurgerMenu.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/BurgerMenu/BurgerMenu.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/Footer/Footer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/Footer/Footer.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +79,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;J:\\jetbrains\\WebStorm 2025.3.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -99,7 +108,10 @@
       <workItem from="1779218456956" duration="36000" />
       <workItem from="1779290376422" duration="2122000" />
       <workItem from="1779292571875" duration="8000" />
-      <workItem from="1779293100415" duration="192000" />
+      <workItem from="1779293100415" duration="257000" />
+      <workItem from="1779297779732" duration="1128000" />
+      <workItem from="1779374314338" duration="54000" />
+      <workItem from="1779374381667" duration="6798000" />
     </task>
     <task id="LOCAL-00001" summary="Feat: &quot; all pages and logics&quot;">
       <option name="closed" value="true" />
@@ -125,7 +137,15 @@
       <option name="project" value="LOCAL" />
       <updated>1779292154227</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fix: &quot; admin page&quot;">
+      <option name="closed" value="true" />
+      <created>1779293311648</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1779293311648</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -122,7 +122,7 @@ export const ShowDetailPage = () => {
               <div className={styles.breadcrumb}>
                 <a href="/" className={styles.breadcrumbLink}>Главная</a>
                 <span className={styles.breadcrumbSeparator}>/</span>
-                <a href="/tickets" className={styles.breadcrumbLink}>Билеты</a>
+                <a href="/tickets" className={styles.breadcrumbLink}>Турниры</a>
                 <span className={styles.breadcrumbSeparator}>/</span>
                 <span className={styles.breadcrumbCurrent}>{ticket.title}</span>
               </div>
@@ -138,7 +138,7 @@ export const ShowDetailPage = () => {
             {/* Блок цены и количества */}
             <div className={styles.priceCard}>
               <div className={styles.priceHeader}>
-                <span className={styles.priceLabel}>Стоимость билета</span>
+                <span className={styles.priceLabel}>Стоимость билета на турнир</span>
                 <div className={styles.priceValue}>
                   {ticket.promotion?.discount > 0 ? (
                       <>

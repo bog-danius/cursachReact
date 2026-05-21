@@ -18,10 +18,6 @@ const navigation = [
     path: '/tickets',
   },
   {
-    title: 'Отзывы',
-    path: '/reviews',
-  },
-  {
     title: 'Вход / Регистрация',
     path: '/auth',
   },

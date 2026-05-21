@@ -8,7 +8,7 @@ export const TicketsManager = ({
   return (
     <div className={styles.manager}>
       <h2 className={styles.title}>
-        Билеты
+        Турниры
       </h2>
 
       <input

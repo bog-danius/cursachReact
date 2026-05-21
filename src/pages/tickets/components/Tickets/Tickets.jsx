@@ -15,7 +15,7 @@ export const Tickets = ({
         {loading ? (
             <div className={styles.state}>
               <span className={styles.spinner}></span>
-              <span>Загрузка билетов...</span>
+              <span>Загрузка турниров...</span>
             </div>
         ) : isEmpty ? (
             <div className={styles.empty}>
@@ -23,7 +23,7 @@ export const Tickets = ({
                 <path d="M3 6h18M9 10v4M15 10v4M5 6h14v12H5V6z" strokeLinecap="round"/>
                 <path d="M3 6l3-4h12l3 4" strokeLinecap="round"/>
               </svg>
-              <span>Билеты не найдены</span>
+              <span>Турниры не найдены</span>
               <span className={styles.emptyHint}>Попробуйте изменить фильтры</span>
             </div>
         ) : (

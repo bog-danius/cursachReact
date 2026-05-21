@@ -7,7 +7,7 @@ export const ShowReviews = ({ reviews, currentUser, onDeleteReview }) => {
     return (
       <div className={styles.reviewsContainer}>
         <h3 className={styles.sectionTitle}>Отзывы зрителей</h3>
-        <p className={styles.noReviews}>Оставь первый отзыв после покупки билета!</p>
+        <p className={styles.noReviews}>Оставь первый отзыв после покупки билета на турнир !</p>
       </div>
     );
   }

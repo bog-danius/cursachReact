@@ -21,9 +21,9 @@ export const ShowActions = ({
         >
           <ShoppingCart size={20} />
           {ticket.quantity <= 0 && !cartItemId 
-            ? 'Билетов нет' 
+            ? 'Турниров нет'
             : !user 
-              ? 'Купить билет' 
+              ? 'Купить билет на турнир'
               : cartItemId 
                 ? 'Убрать из корзины' 
                 : 'В корзину'

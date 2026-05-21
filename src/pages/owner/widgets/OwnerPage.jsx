@@ -203,7 +203,7 @@ export const OwnerPage = () => {
     }
 
     const tabs = [
-        { id: "tickets", label: "Билеты", icon: Ticket, count: tickets.length },
+        { id: "tickets", label: "Турниры", icon: Ticket, count: tickets.length },
         { id: "users", label: "Пользователи", icon: Users, count: users.length },
         { id: "reviews", label: "Отзывы", icon: MessageSquare, count: reviews.length },
         { id: "orders", label: "Заказы", icon: ShoppingBag, count: orders.length },
@@ -272,7 +272,7 @@ export const OwnerPage = () => {
                         <div className={styles.createCard}>
                             <div className={styles.createHeader}>
                                 <Plus size={20} />
-                                <h2>Создать новый билет</h2>
+                                <h2>Создать новый Турнир</h2>
                             </div>
                             <div className={styles.createForm}>
                                 <input
@@ -333,7 +333,7 @@ export const OwnerPage = () => {
                                 />
                                 <button onClick={createTicket}>
                                     <Plus size={16} />
-                                    Создать билет
+                                    Создать Турнир
                                 </button>
                             </div>
                         </div>
@@ -482,7 +482,7 @@ export const OwnerPage = () => {
                                 <div className={styles.orderBody}>
                                     <div className={styles.orderInfo}>
                                         <Ticket size={16} />
-                                        <span>{order.ticket?.title || "Билет удалён"}</span>
+                                        <span>{order.ticket?.title || "Турнир удалён"}</span>
                                     </div>
                                     <div className={styles.orderInfo}>
                                         <User size={16} />
