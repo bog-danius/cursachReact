@@ -4,19 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9c4fcd22-dd2b-420a-83d0-86ad934f36e6" name="Changes" comment="Fix: &quot; admin page&quot;">
+    <list default="true" id="9c4fcd22-dd2b-420a-83d0-86ad934f36e6" name="Changes" comment="Fix: &quot;element&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/hero.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/react.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/vite.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/detail/components/ShowActions/ShowActions.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/detail/components/ShowActions/ShowActions.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/detail/components/ShowReviews/ShowReviews.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/detail/components/ShowReviews/ShowReviews.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/detail/widgets/ShowDetailPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/detail/widgets/ShowDetailPage.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/owner/widgets/OwnerPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/owner/widgets/OwnerPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/tickets/components/Tickets/Tickets.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/tickets/components/Tickets/Tickets.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/tickets/components/TicketsManager/TicketsManager.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/tickets/components/TicketsManager/TicketsManager.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/BurgerMenu/BurgerMenu.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/BurgerMenu/BurgerMenu.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/Footer/Footer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/Footer/Footer.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +101,10 @@
       <workItem from="1779293100415" duration="257000" />
       <workItem from="1779297779732" duration="1128000" />
       <workItem from="1779374314338" duration="54000" />
-      <workItem from="1779374381667" duration="6798000" />
+      <workItem from="1779374381667" duration="6837000" />
+      <workItem from="1779386690423" duration="318000" />
+      <workItem from="1779467457857" duration="2425000" />
+      <workItem from="1779557119080" duration="1670000" />
     </task>
     <task id="LOCAL-00001" summary="Feat: &quot; all pages and logics&quot;">
       <option name="closed" value="true" />
@@ -145,7 +138,15 @@
       <option name="project" value="LOCAL" />
       <updated>1779293311648</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Fix: &quot;element&quot;">
+      <option name="closed" value="true" />
+      <created>1779383503277</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1779383503277</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -154,6 +155,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Feat: &quot; all pages and logics&quot;" />
     <MESSAGE value="Fix: &quot; admin page&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: &quot; admin page&quot;" />
+    <MESSAGE value="Fix: &quot;element&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: &quot;element&quot;" />
   </component>
 </project>

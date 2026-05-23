@@ -110,19 +110,27 @@ export const OwnerPage = () => {
     }, []);
 
     const createTicket = async () => {
-        await ownerApi.createTicket(ticketForm);
+        try {
+            const payload = {
+                ...ticketForm,
+                price: Number(ticketForm.price),
+                quantity: Number(ticketForm.quantity),
+                promotionId: ticketForm.promotionId
+                    ? Number(ticketForm.promotionId)
+                    : null,
+                eventDate: ticketForm.eventDate
+                    ? new Date(ticketForm.eventDate).toISOString()
+                    : null,
+            };
 
-        setTicketForm({
-            title: "",
-            description: "",
-            price: "",
-            eventDate: "",
-            posterUrl: "",
-            quantity: "",
-            promotionId: "",
-        });
+            console.log(payload);
 
-        fetchAll();
+            await ownerApi.createTicket(payload);
+
+            fetchAll();
+        } catch (err) {
+            console.log(err.response?.data);
+        }
     };
 
     const createPromotion = async () => {
