@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9c4fcd22-dd2b-420a-83d0-86ad934f36e6" name="Changes" comment="Fix: &quot;element&quot;">
+    <list default="true" id="9c4fcd22-dd2b-420a-83d0-86ad934f36e6" name="Changes" comment="Fix: &quot;add turnir&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/owner/widgets/OwnerPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/owner/widgets/OwnerPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/seed.js" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/seed.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/seedPromotions.js" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/seedPromotions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/seedTickets.js" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/seedTickets.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +106,8 @@
       <workItem from="1779374381667" duration="6837000" />
       <workItem from="1779386690423" duration="318000" />
       <workItem from="1779467457857" duration="2425000" />
-      <workItem from="1779557119080" duration="1670000" />
+      <workItem from="1779557119080" duration="1702000" />
+      <workItem from="1779645262233" duration="2451000" />
     </task>
     <task id="LOCAL-00001" summary="Feat: &quot; all pages and logics&quot;">
       <option name="closed" value="true" />
@@ -146,16 +149,28 @@
       <option name="project" value="LOCAL" />
       <updated>1779383503277</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Fix: &quot;add turnir&quot;">
+      <option name="closed" value="true" />
+      <created>1779565754737</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1779565754737</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Feat: &quot; all pages and logics&quot;" />
     <MESSAGE value="Fix: &quot; admin page&quot;" />
     <MESSAGE value="Fix: &quot;element&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: &quot;element&quot;" />
+    <MESSAGE value="Fix: &quot;add turnir&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: &quot;add turnir&quot;" />
   </component>
 </project>
