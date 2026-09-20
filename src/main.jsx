@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 
 import { App } from './App.jsx';
-
+import React from 'react';
 createRoot(
   document.getElementById('root')
 ).render(
