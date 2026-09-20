@@ -5,7 +5,8 @@ import { generateToken } from "../utils/auth.js";
 import { authMiddleware } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
-
+const express = require('express');
+const router = express.Router();
 const asyncHandler = (fn) => (req, res, next) => {
   Promise.resolve(fn(req, res, next)).catch(next);
 };
