@@ -11,7 +11,7 @@ import { CartPage } from '@pages/cart';
 import { ProfilePage } from '@pages/profile';
 import { ChoicePage } from '@pages/choice';
 import { OwnerPage } from '@pages/owner';
-
+import React from 'react';
 export const App = () => {
   return (
       <>
