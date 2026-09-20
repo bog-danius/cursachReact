@@ -19,7 +19,7 @@ import documentsRoutes from "./routes/documents.routes.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
-
+const express = require('express');
 app.use(cors({
 	origin: 'http://localhost:5173',
 	credentials: true,
